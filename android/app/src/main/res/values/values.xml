@@ -1,0 +1,10 @@
+<resources>
+    <string name="default_web_client_id" translatable="false">YOUR_DEFAULT_WEB_CLIENT_ID</string>
+    <string name="firebase_database_url" translatable="false">YOUR_DATABASE_URL</string>
+    <string name="gcm_defaultSenderId" translatable="false">"974243331376"</string>
+    <string name="google_api_key" translatable="false">"AIzaSyAU8I983MSbfdG9tTPBlH7qJeonkT8Towg"</string>
+    <string name="google_app_id" translatable="false">"1:974243331376:web:03338a9acfebd9cb19dcf5"</string>
+    <string name="google_crash_reporting_api_key" translatable="false">"AIzaSyAU8I983MSbfdG9tTPBlH7qJeonkT8Towg"</string>
+    <string name="project_id" translatable="false">"slidepuzzle1-c207e"</string>
+    <string name="google_storage_bucket" translatable="false">"slidepuzzle1-c207e.appspot.com"</string>
+</resources>

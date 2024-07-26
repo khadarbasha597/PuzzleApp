@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "974243331376",
+    "project_id": "slidepuzzle1-c207e",
+    "storage_bucket": "slidepuzzle1-c207e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974243331376:android:81030961c6f114d119dcf5",
+        "android_client_info": {
+          "package_name": "com.example.puzzle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLidbBjGd5nd38Q6DAW86jDSfWxnbrIH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

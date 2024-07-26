@@ -1,0 +1,309 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+class registerpage extends StatefulWidget {
+  final VoidCallback lpage;
+  const registerpage({super.key,required this.lpage});
+
+  @override
+  State<registerpage> createState() => _registerpageState();
+}
+
+class _registerpageState extends State<registerpage> {
+  final _fname=TextEditingController();
+  final _lname=TextEditingController();
+  final _age=TextEditingController();
+  final _email=TextEditingController();
+  final _pass=TextEditingController();
+  final _pass1=TextEditingController();
+  Future signup() async {
+    if(pass1()){
+      // new user
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _email.text.trim(),
+        password:_pass.text.trim(),
+      );
+      // add user details
+      addUserDetails(
+          _fname.text.trim(),
+          _lname.text.trim(),
+          _email.text.trim(),
+          int.parse(_age
+          .text.trim()),
+        _pass.text.trim(),
+      );
+    }
+  }
+  Future addUserDetails(String firstName,String lastName,String email,int age,String pass) async{
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser!;
+    String uid = user.uid;
+    CollectionReference users = firestore.collection('users');
+    await users.doc(uid).set({
+      'first name':firstName,
+      'last name':lastName,
+      'email':email,
+      'age':age,
+      'pass':pass,
+    });
+  }
+  bool pass1(){
+    if(_pass1.text.trim() == _pass.text.trim()){
+      return true;
+    }
+    return false;
+  }
+  var _isObscured=true;
+  var _isObscured1=true;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _fname.dispose();
+    _lname.dispose();
+    _age.dispose();
+    _email.dispose();
+    _pass.dispose();
+    _pass1.dispose();
+
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 25,),
+                Text(
+                  'Welcome! Hi',
+                  style: GoogleFonts.bebasNeue(
+                      fontSize: 52
+                  ),
+                ),
+                SizedBox(height: 5,),
+                Text(
+                  'Start for change',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                  ),
+                ),
+                SizedBox(height:25,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _fname,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'First Name',
+
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10,),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _lname,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Last Name',
+
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _age,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'age',
+
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10,),
+                //emailtextfield
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _email,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email',
+
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10,),
+                //passwardtextfield
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _pass,
+                        obscureText: _isObscured,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          suffixIcon: IconButton(
+                            icon: _isObscured? Icon(Icons.visibility_off):Icon(Icons.visibility),
+
+                            onPressed: (){
+                              setState(() {
+                                _isObscured =!_isObscured;
+                              });
+                            }
+                            ,),
+                          hintText: 'Password',
+
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10,),
+                //passwardtextfield
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        obscureText: _isObscured1,
+                        controller: _pass1,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          suffixIcon: IconButton(
+                            icon: _isObscured1? Icon(Icons.visibility_off):Icon(Icons.visibility),
+
+                            onPressed: (){
+                              setState(() {
+                                _isObscured1 =!_isObscured1;
+                              });
+                            }
+                            ,),
+                          hintText: 'Password',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10,),
+                //sign in button
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: GestureDetector(
+                    onTap: signup,
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 25,),
+                //not a member? register now
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'I am a member?',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: widget.lpage ,
+                      child: Text(
+                        'login Now',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
